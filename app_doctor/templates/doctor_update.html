@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h3>Doctor update</h3>
+<button class="btn-geo btn btn-danger">Geoposition</button>
+<form method="POST">
+ {% csrf_token %}
+ {{ form.as_p }}
+
+   <input class="btn btn-success" type="submit" value="Add">
+</form>
+{% endblock %}

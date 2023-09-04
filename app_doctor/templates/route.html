@@ -1,0 +1,33 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <div class="card text-center">
+        <div class="card-header">
+            id {{ order.id }}, Врач- {{ order.doc_name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Пациент - {{ order.patient_name }}</h5>
+            <p class="card-text">Описание заявки - {{ order.text }}</p>
+            <a class="btn btn-primary"
+               href="https://yandex.ru/maps/?pt={{ order.longitude }},{{ order.latitude }}&z=18&l=map">Геопозиция
+                пациета</a>
+            <a class="btn btn-primary"
+               href="https://yandex.ru/maps/?pt={{ route.longitude }},{{ route.latitude }}&z=18&l=map">Геопозиция
+                врача</a>
+            <a class="btn btn-primary"
+               href="https://yandex.ru/maps/?rtext={{ order.latitude }},{{ order.longitude }}~{{ route.latitude }},{{ route.longitude }}&rtt=auto
+">Маршрут</a>
+            <p class="card-text"><a class="btn btn-danger"
+               href="{% url 'app_doctor:route_update' order_id=order.id name=order.doc_name.id %}">Поставить отметку о
+                позиции по маршруту</a></p>
+            <p class="card-text"><span
+                    class="badge bg-primary">Расстояние до доктора - {{ route.get_distance }} км</span></p>
+            <p class="card-text"><span class="badge bg-info">Заявка добавлена в маршрут - {{ route.timestamp }}</span>
+            </p>
+            <p class="card-text"><span class="badge bg-info">В пути - {{ route.get_curent_time_in_work }}</span></p>
+
+        </div>
+        <div class="card-footer text-body-secondary">
+            Дата получения заявки {{ order.timestamp }}
+        </div>
+    </div>
+{% endblock %}

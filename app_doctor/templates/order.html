@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h3>Frontend client</h3>
+<button class="btn-geo btn btn-danger">Предоставить геопозицию</button>
+<form method="POST">
+ {% csrf_token %}
+ {{ form.as_p }}
+
+   <input class="btn btn-success" type="submit" value="Add">
+</form>
+{% endblock %}

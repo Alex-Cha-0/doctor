@@ -1,0 +1,32 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <h3>Doctors manager</h3>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Actions</th>
+            <th scope="col">id</th>
+            <th scope="col">Врач</th>
+            <th scope="col">Время последней отметки</th>
+            <th scope="col">Гео врача</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in doctors %}
+            <tr>
+                <td><a href="{% url 'app_doctor:doctor_update' data.id %}">Отметиться в текущем местоположении</a></td>
+                <td>{{ data.id }}</td>
+                <td>{{ data.name.get_full_name }}</td>
+                <td>{{ data.timestamp }}</td>
+                {% if data.timestamp and data.longitude %}
+                    <td><a href="https://yandex.ru/maps/?pt={{ data.longitude }},{{ data.latitude }}&z=18&l=map">Геопозиция
+                        врача</a></td>
+                {% else %}
+                    <td>Данные не преоставлены</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

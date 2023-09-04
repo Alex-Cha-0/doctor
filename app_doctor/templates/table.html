@@ -1,0 +1,56 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <h3>Заявки</h3>
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item">Нажимаем Edit, добавляем врача к заявке, ставим статус Active</li>
+        <li class="list-group-item">В информации о врачах, отмечаемся в текущем местоположении</li>
+        <li class="list-group-item">На главной странице добавляем заявку в маршрут</li>
+    </ol>
+    <table class="table table-hover fixed-columns">
+        <thead>
+        <tr>
+            <th scope="col">Actions</th>
+            <th scope="col">Врач</th>
+            <th scope="col">Имя пациета</th>
+            <th scope="col">Время записи</th>
+            <th scope="col">Обращение</th>
+            <th scope="col">В работе</th>
+
+            <th scope="col">Маршрут</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            {% if order.is_active %}
+            <tr class="table-info">
+            {% else %}
+            <tr>
+            {% endif %}
+                <td>
+                    <a href="{% url 'app_doctor:order_update' order.id %}">Edit</a>
+                    {% if order.is_active %}
+                        <a class="link-success"
+                           href="{% url 'app_doctor:add_route' order_id=order.id name=order.doc_name.id %}">В маршрут</a>
+                    {% else %}
+                        <p>Не в работе</p>
+                    {% endif %}
+                </td>
+                <th scope="row">{{ order.doc_name }}</th>
+                <td>{{ order.patient_name }}</td>
+                <td>{{ order.timestamp }}</td>
+                <td>{{ order.text }}</td>
+                <td>{{ order.is_active }}</td>
+            {% if order.is_active %}
+            <td><a href="{% url 'app_doctor:route_detail' order.id %}">Посмотреть маршрут</a></td>
+            {% else %}
+            <td>добавте в маршрут</td>
+            {% endif %}
+
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
